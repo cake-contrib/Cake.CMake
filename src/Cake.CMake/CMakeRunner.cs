@@ -97,16 +97,6 @@ namespace Cake.CMake
             var sourcepath = sourcePath.MakeAbsolute(_environment);
             builder.AppendQuoted(sourcepath.FullPath);
 
-            // Output path
-            //if (settings.OutputPath != null)
-            //{
-            //    // Make the output path absolute.
-            //    var outputPath = settings.OutputPath.MakeAbsolute(_environment);
-
-            //    builder.Append("-B");
-            //    builder.AppendQuoted(outputPath.FullPath);
-            //}
-
             // Generator
             if (!string.IsNullOrWhiteSpace(settings.Generator))
             {
