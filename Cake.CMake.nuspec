@@ -9,7 +9,7 @@
     <summary>Adds CMake support to Cake.</summary>
     <licenseUrl>https://github.com/patriksvensson/Cake.CMake/blob/develop/LICENSE</licenseUrl>
     <projectUrl>https://github.com/patriksvensson/Cake.CMake</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/cake-build/graphics/master/png/cake-medium.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/patriksvensson/Cake.CMake/master/res/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright (c) Patrik Svensson</copyright>
     <tags>Cake Script Build</tags>
