@@ -70,7 +70,7 @@ namespace Cake.CMake
         /// <returns>The CMake executable name.</returns>
         protected override IEnumerable<string> GetToolExecutableNames()
         {
-            return new[] { "cmake.exe" };
+            return new[] { "cmake.exe", "cmake" };
         }
 
         /// <summary>
