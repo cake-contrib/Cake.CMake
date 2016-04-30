@@ -1,11 +1,12 @@
 using Cake.Core.IO;
+using Cake.Core.Tooling;
 
 namespace Cake.CMake
 {
     /// <summary>
     /// Contains settings for CMake.
     /// </summary>
-    public sealed class CMakeSettings
+    public sealed class CMakeSettings : ToolSettings
     {
         /// <summary>
         /// Gets or sets the generator.
@@ -24,11 +25,5 @@ namespace Cake.CMake
         /// </summary>
         /// <value>The output path.</value>
         public DirectoryPath OutputPath { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tool path.
-        /// </summary>
-        /// <value>The tool path.</value>
-        public FilePath ToolPath { get; set; }
     }
 }

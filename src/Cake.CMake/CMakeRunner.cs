@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Cake.Core;
 using Cake.Core.IO;
-using Cake.Core.Utilities;
+using Cake.Core.Tooling;
 
 namespace Cake.CMake
 {
@@ -52,7 +52,7 @@ namespace Cake.CMake
             processSettings.WorkingDirectory = outputPath;
 
             // Run the tool using the specified settings.
-            Run(settings, GetArguments(sourcePath, settings), settings.ToolPath, processSettings, null);
+            Run(settings, GetArguments(sourcePath, settings), processSettings, null);
         }
 
         /// <summary>
