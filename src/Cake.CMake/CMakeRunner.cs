@@ -111,6 +111,13 @@ namespace Cake.CMake
                 builder.AppendQuoted(settings.Toolset);
             }
 
+            // Platform
+            if (!string.IsNullOrWhiteSpace(settings.Platform))
+            {
+                builder.Append("-A");
+                builder.AppendQuoted(settings.Platform);
+            }
+
             return builder;
         }
     }
