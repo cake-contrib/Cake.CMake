@@ -227,6 +227,23 @@ namespace Cake.CMake.Tests
                     Arg.Is<ProcessSettings>(
                         p => p.Arguments.Render() == "\"/Working/source\" -T \"cool_toolset\""));
             }
+
+            [Fact]
+            public void Should_Append_Platform_To_Arguments()
+            {
+                // Given
+                var fixture = new CMakeRunnerFixture();
+                fixture.Settings.Platform = "x64";
+
+                // When
+                fixture.Run();
+
+                // Then
+                fixture.ProcessRunner.Received(1).Start(
+                    Arg.Any<FilePath>(),
+                    Arg.Is<ProcessSettings>(
+                        p => p.Arguments.Render() == "\"/Working/source\" -A \"x64\""));
+            }
         }
     }
 }

@@ -21,6 +21,12 @@ namespace Cake.CMake
         public string Toolset { get; set; }
 
         /// <summary>
+        /// Gets or sets the platform name.
+        /// </summary>
+        /// <value>The platform name.</value>
+        public string Platform { get; set; }
+
+        /// <summary>
         /// Gets or sets the output path.
         /// </summary>
         /// <value>The output path.</value>
