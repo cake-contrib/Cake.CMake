@@ -2,6 +2,7 @@
 using Cake.Core.IO;
 using NSubstitute;
 using Xunit;
+using System.Collections.Generic;
 
 namespace Cake.CMake.Tests
 {
@@ -243,6 +244,24 @@ namespace Cake.CMake.Tests
                     Arg.Any<FilePath>(),
                     Arg.Is<ProcessSettings>(
                         p => p.Arguments.Render() == "\"/Working/source\" -A \"x64\""));
+            }
+
+            [Fact]
+            public void Should_Append_Options_To_Arguments()
+            {
+                // Given
+                var fixture = new CMakeRunnerFixture();
+                fixture.Settings.Options = new List<string> { "-DCMAKE_IS_COOL", "-DCAKE_IS_COOL" };
+
+                // When
+                fixture.Run();
+
+                // Then
+                fixture.ProcessRunner.Received(1).Start(
+                    Arg.Any<FilePath>(),
+                    Arg.Is<ProcessSettings>(
+                        p => p.Arguments.Render() == "\"/Working/source\" \"-DCMAKE_IS_COOL\" \"-DCAKE_IS_COOL\""));
+
             }
         }
     }

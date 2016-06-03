@@ -118,6 +118,15 @@ namespace Cake.CMake
                 builder.AppendQuoted(settings.Platform);
             }
 
+            // Options
+            if (settings.Options != null)
+            {
+                foreach (string option in settings.Options)
+                {
+                    builder.AppendQuoted(option);
+                }
+            }
+
             return builder;
         }
     }
