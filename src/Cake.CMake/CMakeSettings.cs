@@ -1,4 +1,5 @@
 using Cake.Core.IO;
+using System.Collections.Generic;
 using Cake.Core.Tooling;
 
 namespace Cake.CMake
@@ -31,5 +32,11 @@ namespace Cake.CMake
         /// </summary>
         /// <value>The output path.</value>
         public DirectoryPath OutputPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets CMake options.
+        /// </summary>
+        /// <value>CMake options.</value>
+        public ICollection<string> Options { get; set; }
     }
 }
