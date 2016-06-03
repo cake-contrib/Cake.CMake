@@ -1,3 +1,6 @@
+### New in 0.1.2 (Released 2015/05/31)
+* Added support for platform name command line switch.
+
 ### New in 0.1.1 (Released 2015/04/30)
 * Updated Cake.Core dependency.
 
