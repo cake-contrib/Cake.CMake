@@ -7,11 +7,11 @@
     <owners>Patrik Svensson</owners>
     <description>Addin that extends Cake with CMake support.</description>
     <summary>Adds CMake support to Cake.</summary>
-    <licenseUrl>https://github.com/patriksvensson/Cake.CMake/blob/develop/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/patriksvensson/Cake.CMake</projectUrl>
+    <licenseUrl>https://github.com/cake-contrib/Cake.CMake/blob/develop/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/cake-contrib/Cake.CMake</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright (c) Patrik Svensson</copyright>
-    <tags>Cake Script Build</tags>
+    <tags>Cake Script Build Unity Unity3D</tags>
   </metadata>
   <files>
     <file src="Cake.CMake.dll" target="lib/net45" />
