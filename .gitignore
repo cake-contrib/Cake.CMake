@@ -4,14 +4,12 @@
 [Tt]emp/
 [Ll]ib/
 [Pp]ackages/
-/[Aa]rtifacts/
+/BuildArtifacts/
 *.sln.ide/
 
 # Build related
-tools/Cake/
-tools/xunit.runners/
-tools/xunit.runner.console/
-tools/nuget.exe
+tools/
+BuildArtifacts/
 
 # mstest test results
 TestResults
