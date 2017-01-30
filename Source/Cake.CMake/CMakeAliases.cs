@@ -25,7 +25,7 @@ namespace Cake.CMake
                 throw new ArgumentNullException(nameof(context));
             }
 
-            var runner = new CMakeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            var runner = new CMakeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
             runner.Run(sourcePath, settings);
         }
     }

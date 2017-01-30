@@ -36,6 +36,7 @@ var sendMessageToTwitter = true;
 var rootDirectoryPath         = MakeAbsolute(Context.Environment.WorkingDirectory);
 var solutionFilePath          = "./Source/Cake.CMake.sln";
 var solutionDirectoryPath     = "./Source/Cake.CMake";
+var sourceDirectoryPath       = "./Source";
 var title                     = "Cake.CMake";
 var resharperSettingsFileName = "Cake.CMake.sln.DotSettings";
 var repositoryOwner           = "cake-contrib";
@@ -45,6 +46,9 @@ var appVeyorProjectSlug       = "cake-cmake";
 
 // NOTE: Only populate this, if required, but leave as is otherwise.
 var dupFinderExcludePattern   = new string[] { };
+var testCoverageFilter = "+[*]* -[xunit.*]* -[Cake.Core]* -[Cake.Testing]* -[*.Tests]* ";
+var testCoverageExcludeByAttribute = "*.ExcludeFromCodeCoverage*";
+var testCoverageExcludeByFile = "*/*Designer.cs;*/*.g.cs;*/*.g.i.cs";
 
 ///////////////////////////////////////////////////////////////////////////////
 // CAKE FILES TO LOAD IN

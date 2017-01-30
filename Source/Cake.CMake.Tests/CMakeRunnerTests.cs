@@ -1,8 +1,8 @@
 ﻿using System;
 using Cake.Core.IO;
-using NSubstitute;
 using Xunit;
 using System.Collections.Generic;
+using Cake.Testing;
 
 namespace Cake.CMake.Tests
 {
@@ -62,8 +62,8 @@ namespace Cake.CMake.Tests
             public void Should_Throw_If_Globber_Is_Null()
             {
                 // Given
-                var fixture = new CMakeRunnerFixture();
-                fixture.Globber = null;
+                var fixture = new CMakeRunnerFixture {};
+                fixture.Tools = null;
 
                 // When
                 var result = Record.Exception(() => fixture.Run());
@@ -119,12 +119,10 @@ namespace Cake.CMake.Tests
                 fixture.Settings.ToolPath = toolPath;
 
                 // When
-                fixture.Run();
+                var result = fixture.Run();
 
                 // Then
-                fixture.ProcessRunner.Received(1).Start(
-                    Arg.Is<FilePath>(p => p.FullPath == expected),
-                    Arg.Any<ProcessSettings>());
+                Assert.Equal(expected, result.Path.FullPath);
             }
 
             [Fact]
@@ -132,136 +130,119 @@ namespace Cake.CMake.Tests
             {
                 // Given
                 var fixture = new CMakeRunnerFixture(defaultToolExist: false);
-                fixture.FileSystem.Exist(
-                    Arg.Is<FilePath>(p => p.FullPath == "/ProgramFilesX86/cmake/bin/cmake.exe")).Returns(true);
-                fixture.Environment.GetSpecialPath(
-                    Arg.Is<SpecialPath>(p => p == SpecialPath.ProgramFilesX86)).Returns(info => "/ProgramFilesX86");
+                const string expected = "/ProgramFilesX86/cmake/bin/cmake.exe";
+                fixture.FileSystem.CreateFile(expected);
+                fixture.Environment.SetSpecialPath(SpecialPath.ProgramFilesX86, "/ProgramFilesX86");
+                
 
                 // When
-                fixture.Run();
+                var result = fixture.Run();
 
                 // Then
-                fixture.ProcessRunner.Received(1).Start(
-                    Arg.Is<FilePath>(p => p.FullPath == "/ProgramFilesX86/cmake/bin/cmake.exe"),
-                    Arg.Any<ProcessSettings>());
+                Assert.Equal(expected, result.Path.FullPath);
             }
 
             [Fact]
             public void Should_Append_Source_Directory_To_Arguments()
             {
                 // Given
+                const string expected = "\"/Working/source\"";
                 var fixture = new CMakeRunnerFixture();
 
                 // When
-                fixture.Run();
+                var result = fixture.Run();
 
                 // Then
-                fixture.ProcessRunner.Received(1).Start(
-                    Arg.Any<FilePath>(),
-                    Arg.Is<ProcessSettings>(
-                        p => p.Arguments.Render() == "\"/Working/source\""));
+                Assert.Equal(expected, result.Args);
             }
 
             [Fact]
             public void Should_Set_Working_Directory_To_Source_Path_If_No_Output_Directory_Specified()
             {
                 // Given
+                const string expected = "/Working/source";
                 var fixture = new CMakeRunnerFixture();
 
                 // When
-                fixture.Run();
+                var result = fixture.Run();
 
                 // Then
-                fixture.ProcessRunner.Received(1).Start(
-                    Arg.Any<FilePath>(),
-                    Arg.Is<ProcessSettings>(
-                        p => p.WorkingDirectory.FullPath == "/Working/source"));
+                Assert.Equal(expected, result.Process.WorkingDirectory.FullPath);
             }
 
             [Fact]
             public void Should_Set_Working_Directory_To_Output_Path_If_Set()
             {
                 // Given
+                const string expected = "/Working/build";
                 var fixture = new CMakeRunnerFixture();
                 fixture.Settings.OutputPath = "./build";
 
                 // When
-                fixture.Run();
+                var result = fixture.Run();
 
                 // Then
-                fixture.ProcessRunner.Received(1).Start(
-                    Arg.Any<FilePath>(),
-                    Arg.Is<ProcessSettings>(
-                        p => p.WorkingDirectory.FullPath == "/Working/build"));
+                Assert.Equal(expected, result.Process.WorkingDirectory.FullPath);
             }
 
             [Fact]
             public void Should_Append_Generator_To_Arguments()
             {
                 // Given
+                const string expected = "\"/Working/source\" -G \"cool_generator\"";
                 var fixture = new CMakeRunnerFixture();
                 fixture.Settings.Generator = "cool_generator";
 
                 // When
-                fixture.Run();
+                var result = fixture.Run();
 
                 // Then
-                fixture.ProcessRunner.Received(1).Start(
-                    Arg.Any<FilePath>(),
-                    Arg.Is<ProcessSettings>(
-                        p => p.Arguments.Render() == "\"/Working/source\" -G \"cool_generator\""));
+                Assert.Equal(expected, result.Args);
             }
 
             [Fact]
             public void Should_Append_Toolset_To_Arguments()
             {
                 // Given
+                const string expected = "\"/Working/source\" -T \"cool_toolset\"";
                 var fixture = new CMakeRunnerFixture();
                 fixture.Settings.Toolset = "cool_toolset";
 
                 // When
-                fixture.Run();
+                var result = fixture.Run();
 
                 // Then
-                fixture.ProcessRunner.Received(1).Start(
-                    Arg.Any<FilePath>(),
-                    Arg.Is<ProcessSettings>(
-                        p => p.Arguments.Render() == "\"/Working/source\" -T \"cool_toolset\""));
+                Assert.Equal(expected, result.Args);
             }
 
             [Fact]
             public void Should_Append_Platform_To_Arguments()
             {
                 // Given
+                const string expected = "\"/Working/source\" -A \"x64\"";
                 var fixture = new CMakeRunnerFixture();
                 fixture.Settings.Platform = "x64";
 
                 // When
-                fixture.Run();
+                var result = fixture.Run();
 
                 // Then
-                fixture.ProcessRunner.Received(1).Start(
-                    Arg.Any<FilePath>(),
-                    Arg.Is<ProcessSettings>(
-                        p => p.Arguments.Render() == "\"/Working/source\" -A \"x64\""));
+                Assert.Equal(expected, result.Args);
             }
 
             [Fact]
             public void Should_Append_Options_To_Arguments()
             {
                 // Given
+                const string expected = "\"/Working/source\" \"-DCMAKE_IS_COOL\" \"-DCAKE_IS_COOL\"";
                 var fixture = new CMakeRunnerFixture();
                 fixture.Settings.Options = new List<string> { "-DCMAKE_IS_COOL", "-DCAKE_IS_COOL" };
 
                 // When
-                fixture.Run();
+                var result = fixture.Run();
 
                 // Then
-                fixture.ProcessRunner.Received(1).Start(
-                    Arg.Any<FilePath>(),
-                    Arg.Is<ProcessSettings>(
-                        p => p.Arguments.Render() == "\"/Working/source\" \"-DCMAKE_IS_COOL\" \"-DCAKE_IS_COOL\""));
-
+                Assert.Equal(expected, result.Args);
             }
         }
     }

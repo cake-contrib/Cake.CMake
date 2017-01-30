@@ -1,53 +1,38 @@
 ﻿using Cake.Core;
 using Cake.Core.IO;
-using NSubstitute;
+using Cake.Core.Tooling;
+using Cake.Testing;
+using Cake.Testing.Fixtures;
 
 namespace Cake.CMake.Tests
 {
-    public sealed class CMakeRunnerFixture
+    public sealed class CMakeRunnerFixture : ToolFixture<CMakeSettings>
     {
-        public IFileSystem FileSystem { get; set; }
-        public ICakeEnvironment Environment { get; set; }
-        public IProcess Process { get; set; }
-        public IProcessRunner ProcessRunner { get; set; }
-        public IGlobber Globber { get; set; }
+
 
         public DirectoryPath SourcePath { get; set; }
-        public CMakeSettings Settings { get; set; }
 
-        public CMakeRunnerFixture(FilePath toolPath = null, bool defaultToolExist = true)
+        public CMakeRunnerFixture(FilePath toolPath = null, bool defaultToolExist = true) :base("/Working/tools/cmake.exe")
         {
-            Process = Substitute.For<IProcess>();
-            Process.GetExitCode().Returns(0);
-
-            ProcessRunner = Substitute.For<IProcessRunner>();
-            ProcessRunner.Start(Arg.Any<FilePath>(), Arg.Any<ProcessSettings>()).Returns(Process);
-
-            Environment = Substitute.For<ICakeEnvironment>();
-            Environment.WorkingDirectory = "/Working";
-            Environment.IsUnix().Returns(false);
-
-            Globber = Substitute.For<IGlobber>();
-            FileSystem = Substitute.For<IFileSystem>();
-
             if (defaultToolExist)
             {
-                Globber.Match("./tools/**/cmake.exe").Returns(new[] { (FilePath)"/Working/tools/cmake.exe" });
-                FileSystem.Exist(Arg.Is<FilePath>(a => a.FullPath == "/Working/tools/cmake.exe")).Returns(true);
+                FileSystem.CreateFile("/Working/tools/cmake.exe");
             }
 
             if (toolPath != null)
             {
-                FileSystem.Exist(Arg.Is<FilePath>(a => a.FullPath == toolPath.FullPath)).Returns(true);
+                FileSystem.CreateFile(toolPath);
             }
 
             SourcePath = "./source";
-            Settings = new CMakeSettings();
+            Environment = new FakeEnvironment(PlatformFamily.Windows);
+            Environment.WorkingDirectory = "/Working";
         }
 
-        public void Run()
+
+        protected override void RunTool()
         {
-            var runner = new CMakeRunner(FileSystem, Environment, ProcessRunner, Globber);
+            var runner = new CMakeRunner(FileSystem, Environment, ProcessRunner, Tools);
             runner.Run(SourcePath, Settings);
         }
     }
