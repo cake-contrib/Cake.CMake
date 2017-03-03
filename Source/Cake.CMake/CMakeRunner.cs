@@ -19,9 +19,9 @@ namespace Cake.CMake
         /// <param name="fileSystem">The file system.</param>
         /// <param name="environment">The environment.</param>
         /// <param name="processRunner">The process runner.</param>
-        /// <param name="globber">The globber.</param>
-        public CMakeRunner(IFileSystem fileSystem, ICakeEnvironment environment, IProcessRunner processRunner, IGlobber globber)
-            : base(fileSystem, environment, processRunner, globber)
+        /// <param name="tools">The tool locator.</param>
+        public CMakeRunner(IFileSystem fileSystem, ICakeEnvironment environment, IProcessRunner processRunner, IToolLocator tools)
+            : base(fileSystem, environment, processRunner,  tools)
         {
             _environment = environment;
         }
@@ -80,7 +80,7 @@ namespace Cake.CMake
         /// <returns>The alternative tool paths to CMake.</returns>
         protected override IEnumerable<FilePath> GetAlternativeToolPaths(CMakeSettings settings)
         {
-            if (!_environment.IsUnix())
+            if (!_environment.Platform.IsUnix())
             {
                 var programFiles = _environment.GetSpecialPath(SpecialPath.ProgramFilesX86);
                 var cmakePath = programFiles.Combine("cmake/bin").CombineWithFilePath("cmake.exe");
