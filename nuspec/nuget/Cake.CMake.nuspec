@@ -17,6 +17,5 @@
     <file src="Cake.CMake.dll" target="lib/net45" />
     <file src="Cake.CMake.xml" target="lib/net45" />
     <file src="Cake.CMake.pdb" target="lib/net45" />
-    <file src="LICENSE" />
   </files>
 </package>
