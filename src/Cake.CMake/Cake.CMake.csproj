@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Cake.CMake</RootNamespace>
     <AssemblyName>Cake.CMake</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -35,8 +35,8 @@
     <DocumentationFile>bin\Release\Cake.CMake.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cake.Core, Version=0.18.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cake.Core.0.18.0\lib\net45\Cake.Core.dll</HintPath>
+    <Reference Include="Cake.Core, Version=0.24.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cake.Core.0.24.0\lib\net46\Cake.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -59,7 +59,9 @@
     <Compile Include="Properties\Namespaces.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

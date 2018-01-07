@@ -6,6 +6,7 @@
 [Pp]ackages/
 /BuildArtifacts/
 *.sln.ide/
+src/.vs/
 
 # Build related
 tools/
