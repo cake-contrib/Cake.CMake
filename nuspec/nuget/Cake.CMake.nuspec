@@ -14,8 +14,8 @@
     <tags>Cake Script Build Unity Unity3D</tags>
   </metadata>
   <files>
-    <file src="Cake.CMake.dll" target="lib/net45" />
-    <file src="Cake.CMake.xml" target="lib/net45" />
-    <file src="Cake.CMake.pdb" target="lib/net45" />
+    <file src="Cake.CMake.dll" target="lib/net46" />
+    <file src="Cake.CMake.xml" target="lib/net46" />
+    <file src="Cake.CMake.pdb" target="lib/net46" />
   </files>
 </package>
