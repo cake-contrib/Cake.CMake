@@ -8,8 +8,6 @@ namespace Cake.CMake.Tests
 {
     public sealed class CMakeRunnerFixture : ToolFixture<CMakeSettings>
     {
-
-
         public DirectoryPath SourcePath { get; set; }
 
         public CMakeRunnerFixture(FilePath toolPath = null, bool defaultToolExist = true) :base("/Working/tools/cmake.exe")
@@ -28,7 +26,6 @@ namespace Cake.CMake.Tests
             Environment = new FakeEnvironment(PlatformFamily.Windows);
             Environment.WorkingDirectory = "/Working";
         }
-
 
         protected override void RunTool()
         {
