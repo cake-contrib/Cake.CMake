@@ -9,13 +9,14 @@
     <summary>Adds CMake support to Cake.</summary>
     <licenseUrl>https://github.com/cake-contrib/Cake.CMake/blob/develop/LICENSE</licenseUrl>
     <projectUrl>https://github.com/cake-contrib/Cake.CMake</projectUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics@a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright (c) Patrik Svensson</copyright>
     <tags>Cake Script Build Unity Unity3D</tags>
   </metadata>
   <files>
-    <file src="Cake.CMake.dll" target="lib/net45" />
-    <file src="Cake.CMake.xml" target="lib/net45" />
-    <file src="Cake.CMake.pdb" target="lib/net45" />
+    <file src="netcoreapp2.1/Cake.CMake.deps.json" target="lib/netcoreapp2.1" />
+    <file src="netcoreapp2.1/Cake.CMake.dll" target="lib/netcoreapp2.1" />
+    <file src="netcoreapp2.1/Cake.CMake.pdb" target="lib/netcoreapp2.1" />
   </files>
 </package>

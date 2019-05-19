@@ -1,4 +1,4 @@
-#load "nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease"
+#load "nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&version=1.0.0"
 
 Environment.SetVariableNames();
 
@@ -18,4 +18,4 @@ ToolSettings.SetToolSettings(context: Context,
                             testCoverageFilter: "+[*]* -[xunit.*]* -[Cake.Core]* -[Cake.Testing]* -[*.Tests]* ",
                             testCoverageExcludeByAttribute: "*.ExcludeFromCodeCoverage*",
                             testCoverageExcludeByFile: "*/*Designer.cs;*/*.g.cs;*/*.g.i.cs");
-Build.Run();
+Build.RunDotNetCore();
