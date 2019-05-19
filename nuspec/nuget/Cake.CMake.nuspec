@@ -18,5 +18,6 @@
     <file src="netcoreapp2.1/Cake.CMake.deps.json" target="lib/netcoreapp2.1" />
     <file src="netcoreapp2.1/Cake.CMake.dll" target="lib/netcoreapp2.1" />
     <file src="netcoreapp2.1/Cake.CMake.pdb" target="lib/netcoreapp2.1" />
+    <file src="netcoreapp2.1/Cake.CMake.xml" target="lib/netcoreapp2.1" />
   </files>
 </package>
