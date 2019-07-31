@@ -1,12 +1,30 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <DocumentationFile>$(OutputPath)\Cake.CMake.xml</DocumentationFile>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Copyright>Copyright (c) Patrik Svensson</Copyright>
+    <Authors>Patrik Svensson</Authors>
+    <Version>0.0.1</Version>
+    <PackageId>Cake.CMake</PackageId>
+    <Description>Addin that extends Cake with CMake support.</Description>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/cake-contrib/Cake.CMake</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cake-contrib/Cake.CMake</RepositoryUrl>
+    <PackageTags>Cake Script Build</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="0.32.1" />
+    <PackageReference Include="Cake.Core" Version="0.34.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
