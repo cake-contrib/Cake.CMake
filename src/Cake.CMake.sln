@@ -1,11 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.CMake", "Cake.CMake\Cake.CMake.csproj", "{799848A4-ED57-4BB8-94B2-F917C3A91D00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.CMake", "Cake.CMake\Cake.CMake.csproj", "{E66231C0-6138-4507-B301-7682552F9AEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.CMake.Tests", "Cake.CMake.Tests\Cake.CMake.Tests.csproj", "{A7D40DA2-7102-4A0D-B8D3-69D98221C8AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.CMake.Tests", "Cake.CMake.Tests\Cake.CMake.Tests.csproj", "{0D45F37D-BB5E-4F90-B8D1-A57049E160F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6EF6A567-C9B0-49B8-9A04-4E4566E090DF}"
+	ProjectSection(SolutionItems) = preProject
+		..\CHANGELOG.md = ..\CHANGELOG.md
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,16 +20,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{799848A4-ED57-4BB8-94B2-F917C3A91D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{799848A4-ED57-4BB8-94B2-F917C3A91D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{799848A4-ED57-4BB8-94B2-F917C3A91D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{799848A4-ED57-4BB8-94B2-F917C3A91D00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7D40DA2-7102-4A0D-B8D3-69D98221C8AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7D40DA2-7102-4A0D-B8D3-69D98221C8AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7D40DA2-7102-4A0D-B8D3-69D98221C8AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7D40DA2-7102-4A0D-B8D3-69D98221C8AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E66231C0-6138-4507-B301-7682552F9AEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E66231C0-6138-4507-B301-7682552F9AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E66231C0-6138-4507-B301-7682552F9AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E66231C0-6138-4507-B301-7682552F9AEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D45F37D-BB5E-4F90-B8D1-A57049E160F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D45F37D-BB5E-4F90-B8D1-A57049E160F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D45F37D-BB5E-4F90-B8D1-A57049E160F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D45F37D-BB5E-4F90-B8D1-A57049E160F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EFBBA2B7-C3FF-4EEE-A847-EFB212E0F684}
 	EndGlobalSection
 EndGlobal
