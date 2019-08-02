@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="0.32.1" />
-    <PackageReference Include="Cake.Testing" Version="0.32.1" />
+    <PackageReference Include="Cake.Core" Version="0.34.1" />
+    <PackageReference Include="Cake.Testing" Version="0.34.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
