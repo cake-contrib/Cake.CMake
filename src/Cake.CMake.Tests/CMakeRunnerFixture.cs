@@ -20,19 +20,17 @@ namespace Cake.CMake.Tests
         this.FileSystem.CreateFile(toolPath);
       }
 
-      this.SourcePath = "./source";
+      this.Settings.SourcePath = "./source";
       this.Environment = new FakeEnvironment(PlatformFamily.Windows)
       {
         WorkingDirectory = "/Working"
       };
     }
 
-    public DirectoryPath SourcePath { get; set; }
-
     protected override void RunTool()
     {
       var runner = new CMakeRunner(this.FileSystem, this.Environment, this.ProcessRunner, this.Tools);
-      runner.Run(this.SourcePath, this.Settings);
+      runner.Run(this.Settings);
     }
   }
 }

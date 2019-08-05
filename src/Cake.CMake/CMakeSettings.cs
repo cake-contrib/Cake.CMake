@@ -34,6 +34,14 @@ namespace Cake.CMake
     public DirectoryPath OutputPath { get; set; }
 
     /// <summary>
+    /// Gets or sets the source path.
+    /// </summary>
+    /// <value>
+    /// The source path.
+    /// </value>
+    public DirectoryPath SourcePath { get; set; }
+
+    /// <summary>
     /// Gets or sets CMake options.
     /// </summary>
     /// <value>CMake options.</value>
