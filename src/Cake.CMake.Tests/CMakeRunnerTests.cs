@@ -68,8 +68,10 @@ namespace Cake.CMake.Tests
       public void ShouldThrowIfGlobberIsNull()
       {
         // Given
-        var fixture = new CMakeRunnerFixture();
-        fixture.Tools = null;
+        var fixture = new CMakeRunnerFixture
+        {
+          Tools = null
+        };
 
         // When
         var result = Record.Exception(() => fixture.Run());
@@ -84,12 +86,16 @@ namespace Cake.CMake.Tests
     public sealed class TheRunMethod
     {
       [Fact]
-      public void ShouldThrowIfSourcePathIsNull()
+      public void ShouldThrowIfSourcePathAndOutputPathIsNull()
       {
         // Given
         var fixture = new CMakeRunnerFixture
         {
-          SourcePath = null
+          Settings =
+          {
+            SourcePath = null,
+            OutputPath = null
+          }
         };
 
         // When
@@ -97,8 +103,28 @@ namespace Cake.CMake.Tests
 
         // Then
         Assert.NotNull(result);
-        Assert.IsType<ArgumentNullException>(result);
-        Assert.Equal("sourcePath", ((ArgumentNullException)result).ParamName);
+        Assert.IsType<ArgumentException>(result);
+        Assert.Equal("The settings properties OutputPath or SourcePath should not be null.", ((ArgumentException)result).Message);
+      }
+
+      [Fact]
+      public void ShouldNotThrowIfSourcePathIsNull()
+      {
+        // Given
+        var fixture = new CMakeRunnerFixture
+        {
+          Settings =
+          {
+            SourcePath = null,
+            OutputPath = "./build"
+          }
+        };
+
+        // When
+        var result = Record.Exception(() => fixture.Run());
+
+        // Then
+        Assert.Null(result);
       }
 
       [Fact]
@@ -125,8 +151,13 @@ namespace Cake.CMake.Tests
       public void ShouldUseCMakeExecutableFromToolPathIfProvided(string toolPath, string expected)
       {
         // Given
-        var fixture = new CMakeRunnerFixture(toolPath: expected);
-        fixture.Settings.ToolPath = toolPath;
+        var fixture = new CMakeRunnerFixture(toolPath: expected)
+        {
+          Settings =
+          {
+            ToolPath = toolPath
+          }
+        };
 
         // When
         var result = fixture.Run();
@@ -184,8 +215,13 @@ namespace Cake.CMake.Tests
       {
         // Given
         const string Expected = "/Working/build";
-        var fixture = new CMakeRunnerFixture();
-        fixture.Settings.OutputPath = "./build";
+        var fixture = new CMakeRunnerFixture
+        {
+          Settings =
+          {
+            OutputPath = "./build"
+          }
+        };
 
         // When
         var result = fixture.Run();
@@ -199,8 +235,13 @@ namespace Cake.CMake.Tests
       {
         // Given
         const string Expected = "-S \"/Working/source\" -G \"cool_generator\"";
-        var fixture = new CMakeRunnerFixture();
-        fixture.Settings.Generator = "cool_generator";
+        var fixture = new CMakeRunnerFixture
+        {
+          Settings =
+          {
+            Generator = "cool_generator"
+          }
+        };
 
         // When
         var result = fixture.Run();
@@ -214,8 +255,13 @@ namespace Cake.CMake.Tests
       {
         // Given
         const string Expected = "-S \"/Working/source\" -T \"cool_toolset\"";
-        var fixture = new CMakeRunnerFixture();
-        fixture.Settings.Toolset = "cool_toolset";
+        var fixture = new CMakeRunnerFixture
+        {
+          Settings =
+          {
+            Toolset = "cool_toolset"
+          }
+        };
 
         // When
         var result = fixture.Run();
@@ -229,8 +275,13 @@ namespace Cake.CMake.Tests
       {
         // Given
         const string Expected = "-S \"/Working/source\" -A \"x64\"";
-        var fixture = new CMakeRunnerFixture();
-        fixture.Settings.Platform = "x64";
+        var fixture = new CMakeRunnerFixture
+        {
+          Settings =
+          {
+            Platform = "x64"
+          }
+        };
 
         // When
         var result = fixture.Run();
@@ -244,8 +295,17 @@ namespace Cake.CMake.Tests
       {
         // Given
         const string Expected = "-S \"/Working/source\" \"-DCMAKE_IS_COOL\" \"-DCAKE_IS_COOL\"";
-        var fixture = new CMakeRunnerFixture();
-        fixture.Settings.Options = new List<string> { "-DCMAKE_IS_COOL", "-DCAKE_IS_COOL" };
+        var fixture = new CMakeRunnerFixture
+        {
+          Settings =
+          {
+            Options = new List<string>
+            {
+              "-DCMAKE_IS_COOL",
+              "-DCAKE_IS_COOL"
+            }
+          }
+        };
 
         // When
         var result = fixture.Run();

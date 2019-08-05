@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
@@ -9,7 +8,7 @@ namespace Cake.CMake
   /// <summary>
   /// Implementation of the CMake tool runner.
   /// </summary>
-  public sealed class CMakeRunner : Tool<CMakeSettings>
+  public sealed class CMakeRunner : CMakeRunnerBase<CMakeSettings>
   {
     private readonly ICakeEnvironment _environment;
 
@@ -29,23 +28,22 @@ namespace Cake.CMake
     /// <summary>
     /// Runs CMake using the specified path and settings.
     /// </summary>
-    /// <param name="sourcePath">The source path.</param>
     /// <param name="settings">The settings.</param>
-    public void Run(DirectoryPath sourcePath, CMakeSettings settings)
+    public override void Run(CMakeSettings settings)
     {
-      if (sourcePath == null)
-      {
-        throw new ArgumentNullException(nameof(sourcePath));
-      }
-
       if (settings == null)
       {
         throw new ArgumentNullException(nameof(settings));
       }
 
+      if (settings.OutputPath == null && settings.SourcePath == null)
+      {
+        throw new ArgumentException("The settings properties OutputPath or SourcePath should not be null.");
+      }
+
       // Get the output path.
       var outputPath = settings.OutputPath;
-      outputPath = outputPath ?? sourcePath;
+      outputPath = outputPath ?? settings.SourcePath;
       outputPath = outputPath.MakeAbsolute(_environment);
 
       // Create the process settings.
@@ -55,51 +53,19 @@ namespace Cake.CMake
       };
 
       // Run the tool using the specified settings.
-      this.Run(settings, this.GetArguments(sourcePath, settings), processSettings, null);
+      this.Run(settings, this.GetArguments(settings), processSettings, null);
     }
 
-    /// <summary>
-    /// Gets the name of the tool.
-    /// </summary>
-    /// <returns>The tool name.</returns>
-    protected override string GetToolName()
-    {
-      return "CMake";
-    }
-
-    /// <summary>
-    /// Gets the tool executable names.
-    /// </summary>
-    /// <returns>The CMake executable name.</returns>
-    protected override IEnumerable<string> GetToolExecutableNames()
-    {
-      return new[] { "cmake.exe", "cmake" };
-    }
-
-    /// <summary>
-    /// Gets the alternative tool paths to CMake.
-    /// </summary>
-    /// <param name="settings">The settings.</param>
-    /// <returns>The alternative tool paths to CMake.</returns>
-    protected override IEnumerable<FilePath> GetAlternativeToolPaths(CMakeSettings settings)
-    {
-      if (!_environment.Platform.IsUnix())
-      {
-        var programFiles = _environment.GetSpecialPath(SpecialPath.ProgramFilesX86);
-        var cmakePath = programFiles.Combine("cmake/bin").CombineWithFilePath("cmake.exe");
-        return new[] { cmakePath };
-      }
-
-      return new FilePath[] { };
-    }
-
-    private ProcessArgumentBuilder GetArguments(DirectoryPath sourcePath, CMakeSettings settings)
+    private ProcessArgumentBuilder GetArguments(CMakeSettings settings)
     {
       var builder = new ProcessArgumentBuilder();
 
-      var sourcepath = sourcePath.MakeAbsolute(_environment);
+      if (settings.SourcePath != null)
+      {
+        var sourcePath = settings.SourcePath.MakeAbsolute(_environment);
 
-      builder.AppendSwitchQuoted("-S", sourcepath.FullPath);
+        builder.AppendSwitchQuoted("-S", sourcePath.FullPath);
+      }
 
       // Generator
       if (!string.IsNullOrWhiteSpace(settings.Generator))
