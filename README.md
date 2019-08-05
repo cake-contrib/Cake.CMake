@@ -1,7 +1,10 @@
 # Cake.CMake
-[![Nuget](https://img.shields.io/nuget/v/Cake.CMake.svg)](https://www.nuget.org/packages/Cake.CMake)
 
 Addin that extends Cake with CMake support.
+
+| Stable | Pre-release |
+|:--:|:--:|
+|[![Nuget](https://img.shields.io/nuget/v/Cake.CMake.svg)](https://www.nuget.org/packages/Cake.CMake)|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Cake.CMake)|
 
 # How to use
 
