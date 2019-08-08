@@ -9,7 +9,7 @@ Addin that extends Cake with CMake support.
 
 ### Build status:
 
-| master | develop |
+| develop | master |
 |:--:|:--:|
 |[![Build status](https://ci.appveyor.com/api/projects/status/e5k60e6yfk57i0jm/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-cmake/branch/develop)|[![Build status](https://ci.appveyor.com/api/projects/status/e5k60e6yfk57i0jm/branch/master?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-cmake/branch/master)|
 
