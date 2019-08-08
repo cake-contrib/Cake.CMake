@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2019-08-08
+### Added 
+- Support build mode for CMake.(--build flag)
+- Unit tests for CMakeBuildRunner.
+### Changed
+- Removed sourcePath from required parameters for CMake command.
+- Create output path if it is not exists for CMake.
+
 ## [1.1.0-beta01] - 2019-08-05
 ### Added 
 - Support build mode for CMake.(--build flag)
