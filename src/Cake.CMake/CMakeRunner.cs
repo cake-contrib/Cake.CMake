@@ -62,7 +62,7 @@ namespace Cake.CMake
       // Create the process settings.
       var processSettings = new ProcessSettings
       {
-        WorkingDirectory = outputPath
+        WorkingDirectory = workingDirectory
       };
 
       // Run the tool using the specified settings.
