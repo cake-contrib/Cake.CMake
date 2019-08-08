@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
@@ -43,8 +44,12 @@ namespace Cake.CMake
 
       // Get the output path.
       var outputPath = settings.OutputPath;
-      outputPath = outputPath ?? settings.SourcePath;
-      outputPath = outputPath.MakeAbsolute(_environment);
+      var workingDirectory = (outputPath ?? settings.SourcePath).MakeAbsolute(_environment);
+
+      if (!Directory.Exists(workingDirectory.FullPath))
+      {
+        Directory.CreateDirectory(workingDirectory.FullPath);
+      }
 
       // Create the process settings.
       var processSettings = new ProcessSettings
