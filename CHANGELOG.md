@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2019-08-09
+### Fixed 
+- Exception when try to log information message if output directory don't exists.
+
 ## [1.1.0] - 2019-08-08
 ### Added 
 - Support build mode for CMake.(--build flag) ([#19](https://github.com/cake-contrib/Cake.CMake/issues/19))
