@@ -52,11 +52,11 @@ namespace Cake.CMake
 
       if (!Directory.Exists(workingDirectory.FullPath))
       {
-        _log.Information("The working directory {Path} does not found and will create.", workingDirectory.FullPath);
+        _log.Information("The working directory {0} does not found and will create.", workingDirectory.FullPath);
 
         Directory.CreateDirectory(workingDirectory.FullPath);
 
-        _log.Information("The working directory {Path} was created.", workingDirectory.FullPath);
+        _log.Information("The working directory {0} was created.", workingDirectory.FullPath);
       }
 
       // Create the process settings.
