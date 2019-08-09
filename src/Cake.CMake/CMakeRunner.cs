@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using Cake.Core;
+using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
 
@@ -11,18 +13,21 @@ namespace Cake.CMake
   public sealed class CMakeRunner : CMakeRunnerBase<CMakeSettings>
   {
     private readonly ICakeEnvironment _environment;
+    private readonly ICakeLog _log;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CMakeRunner"/> class.
+    /// Initializes a new instance of the <see cref="CMakeRunner" /> class.
     /// </summary>
     /// <param name="fileSystem">The file system.</param>
     /// <param name="environment">The environment.</param>
     /// <param name="processRunner">The process runner.</param>
     /// <param name="tools">The tool locator.</param>
-    public CMakeRunner(IFileSystem fileSystem, ICakeEnvironment environment, IProcessRunner processRunner, IToolLocator tools)
+    /// <param name="log">The log.</param>
+    public CMakeRunner(IFileSystem fileSystem, ICakeEnvironment environment, IProcessRunner processRunner, IToolLocator tools, ICakeLog log)
         : base(fileSystem, environment, processRunner, tools)
     {
       _environment = environment;
+      _log = log;
     }
 
     /// <summary>
@@ -43,13 +48,21 @@ namespace Cake.CMake
 
       // Get the output path.
       var outputPath = settings.OutputPath;
-      outputPath = outputPath ?? settings.SourcePath;
-      outputPath = outputPath.MakeAbsolute(_environment);
+      var workingDirectory = (outputPath ?? settings.SourcePath).MakeAbsolute(_environment);
+
+      if (!Directory.Exists(workingDirectory.FullPath))
+      {
+        _log.Information("The working directory {Path} does not found and will create.", workingDirectory.FullPath);
+
+        Directory.CreateDirectory(workingDirectory.FullPath);
+
+        _log.Information("The working directory {Path} was created.", workingDirectory.FullPath);
+      }
 
       // Create the process settings.
       var processSettings = new ProcessSettings
       {
-        WorkingDirectory = outputPath
+        WorkingDirectory = workingDirectory
       };
 
       // Run the tool using the specified settings.

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Cake.CMake.Tests.Fixtures;
 using Cake.Core.IO;
 using Cake.Testing;
@@ -7,7 +6,7 @@ using Xunit;
 
 namespace Cake.CMake.Tests
 {
-  public sealed class CMakeRunnerTests
+  public class CMakeBuildRunnerTests
   {
     public sealed class TheConstructor
     {
@@ -15,7 +14,7 @@ namespace Cake.CMake.Tests
       public void ShouldThrowIfFileSystemIsNull()
       {
         // Given
-        var fixture = new CMakeRunnerFixture
+        var fixture = new CMakeBuildRunnerFixture
         {
           FileSystem = null
         };
@@ -33,7 +32,7 @@ namespace Cake.CMake.Tests
       public void ShouldThrowIfEnvironmentIsNull()
       {
         // Given
-        var fixture = new CMakeRunnerFixture
+        var fixture = new CMakeBuildRunnerFixture
         {
           Environment = null
         };
@@ -51,7 +50,7 @@ namespace Cake.CMake.Tests
       public void ShouldThrowIfProcessRunnerIsNull()
       {
         // Given
-        var fixture = new CMakeRunnerFixture
+        var fixture = new CMakeBuildRunnerFixture
         {
           ProcessRunner = null
         };
@@ -69,7 +68,7 @@ namespace Cake.CMake.Tests
       public void ShouldThrowIfGlobberIsNull()
       {
         // Given
-        var fixture = new CMakeRunnerFixture
+        var fixture = new CMakeBuildRunnerFixture
         {
           Tools = null
         };
@@ -87,15 +86,14 @@ namespace Cake.CMake.Tests
     public sealed class TheRunMethod
     {
       [Fact]
-      public void ShouldThrowIfSourcePathAndOutputPathIsNull()
+      public void ShouldThrowIfBinaryPathIsNull()
       {
         // Given
-        var fixture = new CMakeRunnerFixture
+        var fixture = new CMakeBuildRunnerFixture
         {
           Settings =
           {
-            SourcePath = null,
-            OutputPath = null
+            BinaryPath = null
           }
         };
 
@@ -104,35 +102,15 @@ namespace Cake.CMake.Tests
 
         // Then
         Assert.NotNull(result);
-        Assert.IsType<ArgumentException>(result);
-        Assert.Equal("The settings properties OutputPath or SourcePath should not be null.", ((ArgumentException)result).Message);
-      }
-
-      [Fact]
-      public void ShouldNotThrowIfSourcePathIsNull()
-      {
-        // Given
-        var fixture = new CMakeRunnerFixture
-        {
-          Settings =
-          {
-            SourcePath = null,
-            OutputPath = "./build"
-          }
-        };
-
-        // When
-        var result = Record.Exception(() => fixture.Run());
-
-        // Then
-        Assert.Null(result);
+        Assert.IsType<ArgumentNullException>(result);
+        Assert.Equal(nameof(CMakeBuildSettings.BinaryPath), ((ArgumentException)result).ParamName);
       }
 
       [Fact]
       public void ShouldThrowIfSettingsAreNull()
       {
         // Given
-        var fixture = new CMakeRunnerFixture
+        var fixture = new CMakeBuildRunnerFixture
         {
           Settings = null
         };
@@ -152,7 +130,7 @@ namespace Cake.CMake.Tests
       public void ShouldUseCMakeExecutableFromToolPathIfProvided(string toolPath, string expected)
       {
         // Given
-        var fixture = new CMakeRunnerFixture(toolPath: expected)
+        var fixture = new CMakeBuildRunnerFixture(toolPath: expected)
         {
           Settings =
           {
@@ -171,7 +149,7 @@ namespace Cake.CMake.Tests
       public void ShouldLookInProgramFiles()
       {
         // Given
-        var fixture = new CMakeRunnerFixture(defaultToolExist: false);
+        var fixture = new CMakeBuildRunnerFixture(defaultToolExist: false);
         const string Expected = "/ProgramFilesX86/cmake/bin/cmake.exe";
         fixture.FileSystem.CreateFile(Expected);
         fixture.Environment.SetSpecialPath(SpecialPath.ProgramFilesX86, "/ProgramFilesX86");
@@ -184,11 +162,11 @@ namespace Cake.CMake.Tests
       }
 
       [Fact]
-      public void ShouldAppendSourceDirectoryToArguments()
+      public void ShouldAppendBinaryDirectoryToArguments()
       {
         // Given
-        const string Expected = "-S \"/Working/source\"";
-        var fixture = new CMakeRunnerFixture();
+        const string Expected = "--build \"/Working/bin\"";
+        var fixture = new CMakeBuildRunnerFixture();
 
         // When
         var result = fixture.Run();
@@ -198,11 +176,11 @@ namespace Cake.CMake.Tests
       }
 
       [Fact]
-      public void ShouldSetWorkingDirectoryToSourcePathIfNoOutputDirectorySpecified()
+      public void ShouldSetWorkingDirectoryToBinaryPathIfNoOutputDirectorySpecified()
       {
         // Given
-        const string Expected = "/Working/source";
-        var fixture = new CMakeRunnerFixture();
+        const string Expected = "/Working/bin";
+        var fixture = new CMakeBuildRunnerFixture();
 
         // When
         var result = fixture.Run();
@@ -212,15 +190,15 @@ namespace Cake.CMake.Tests
       }
 
       [Fact]
-      public void ShouldSetWorkingDirectoryToOutputPathIfSet()
+      public void ShouldSetWorkingDirectoryToBinaryPathIfSet()
       {
         // Given
         const string Expected = "/Working/build";
-        var fixture = new CMakeRunnerFixture
+        var fixture = new CMakeBuildRunnerFixture
         {
           Settings =
           {
-            OutputPath = "./build"
+            BinaryPath = "./build"
           }
         };
 
@@ -232,15 +210,15 @@ namespace Cake.CMake.Tests
       }
 
       [Fact]
-      public void ShouldAppendGeneratorToArguments()
+      public void ShouldAppendCleanFirstToArguments()
       {
         // Given
-        const string Expected = "-S \"/Working/source\" -G \"cool_generator\"";
-        var fixture = new CMakeRunnerFixture
+        const string Expected = "--build \"/Working/bin\" --clean-first";
+        var fixture = new CMakeBuildRunnerFixture
         {
           Settings =
           {
-            Generator = "cool_generator"
+            CleanFirst = true
           }
         };
 
@@ -252,59 +230,15 @@ namespace Cake.CMake.Tests
       }
 
       [Fact]
-      public void ShouldAppendToolsetToArguments()
+      public void ShouldAppendTargetsToArguments()
       {
         // Given
-        const string Expected = "-S \"/Working/source\" -T \"cool_toolset\"";
-        var fixture = new CMakeRunnerFixture
+        const string Expected = "--build \"/Working/bin\" --target Debug,Release";
+        var fixture = new CMakeBuildRunnerFixture
         {
           Settings =
           {
-            Toolset = "cool_toolset"
-          }
-        };
-
-        // When
-        var result = fixture.Run();
-
-        // Then
-        Assert.Equal(Expected, result.Args);
-      }
-
-      [Fact]
-      public void ShouldAppendPlatformToArguments()
-      {
-        // Given
-        const string Expected = "-S \"/Working/source\" -A \"x64\"";
-        var fixture = new CMakeRunnerFixture
-        {
-          Settings =
-          {
-            Platform = "x64"
-          }
-        };
-
-        // When
-        var result = fixture.Run();
-
-        // Then
-        Assert.Equal(Expected, result.Args);
-      }
-
-      [Fact]
-      public void ShouldAppendOptionsToArguments()
-      {
-        // Given
-        const string Expected = "-S \"/Working/source\" \"-DCMAKE_IS_COOL\" \"-DCAKE_IS_COOL\"";
-        var fixture = new CMakeRunnerFixture
-        {
-          Settings =
-          {
-            Options = new List<string>
-            {
-              "-DCMAKE_IS_COOL",
-              "-DCAKE_IS_COOL"
-            }
+            Targets = new [] { "Debug", "Release" }
           }
         };
 

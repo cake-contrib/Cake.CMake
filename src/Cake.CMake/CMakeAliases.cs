@@ -20,16 +20,9 @@ namespace Cake.CMake
     [CakeMethodAlias]
     public static void CMake(this ICakeContext context, DirectoryPath sourcePath, CMakeSettings settings)
     {
-      if (context == null)
-      {
-        throw new ArgumentNullException(nameof(context));
-      }
-
-      var runner = new CMakeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
-
       settings.SourcePath = sourcePath ?? settings.SourcePath;
 
-      runner.Run(settings);
+      context.CMake(settings);
     }
 
     /// <summary>
@@ -45,7 +38,7 @@ namespace Cake.CMake
         throw new ArgumentNullException(nameof(context));
       }
 
-      var runner = new CMakeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
+      var runner = new CMakeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, context.Log);
       runner.Run(settings);
     }
 
