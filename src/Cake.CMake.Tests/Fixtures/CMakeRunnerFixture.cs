@@ -1,9 +1,10 @@
 ﻿using Cake.Core;
+using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Testing;
 using Cake.Testing.Fixtures;
 
-namespace Cake.CMake.Tests
+namespace Cake.CMake.Tests.Fixtures
 {
   public sealed class CMakeRunnerFixture : ToolFixture<CMakeSettings>
   {
@@ -29,7 +30,7 @@ namespace Cake.CMake.Tests
 
     protected override void RunTool()
     {
-      var runner = new CMakeRunner(this.FileSystem, this.Environment, this.ProcessRunner, this.Tools);
+      var runner = new CMakeRunner(this.FileSystem, this.Environment, this.ProcessRunner, this.Tools, new NullLog());
       runner.Run(this.Settings);
     }
   }
