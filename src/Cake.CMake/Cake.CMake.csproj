@@ -9,7 +9,8 @@
     <Description>Addin that extends Cake with CMake support.</Description>
     <PackageLicenseExpression></PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/cake-contrib/Cake.CMake</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/cake-contrib/Cake.CMake</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/cake-contrib/Cake.CMake.git</RepositoryUrl>
     <PackageTags>Cake Script Build</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
