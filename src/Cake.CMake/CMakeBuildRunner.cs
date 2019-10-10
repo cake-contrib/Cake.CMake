@@ -71,9 +71,16 @@ namespace Cake.CMake
         builder.AppendSwitch("--target", string.Join(",", settings.Targets));
       }
 
-      // Options
-      if (settings.Options != null)
+      //Configuration
+      if (settings.Configuration != null)
       {
+          builder.AppendSwitch("--config", settings.Configuration);
+      }
+
+      // Options
+      if (settings.Options != null && settings.Options.Count > 0)
+      {
+        builder.Append("--");
         foreach (string option in settings.Options)
         {
           builder.AppendQuoted(option);
