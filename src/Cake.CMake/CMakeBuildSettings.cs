@@ -37,6 +37,15 @@ namespace Cake.CMake
     public ICollection<string> Targets { get; set; }
 
     /// <summary>
+    /// Gets or sets the configuration for multi-configuration tools.
+    /// <remarks>--config &lt;cfg&gt;</remarks>
+    /// <value>
+    /// The configuration.
+    /// </value>
+    /// </summary>
+    public string Configuration { get; set; }
+
+    /// <summary>
     /// Gets or sets CMake build options.
     /// </summary>
     /// <value>CMake build options.</value>

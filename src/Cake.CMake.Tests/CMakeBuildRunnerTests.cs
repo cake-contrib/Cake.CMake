@@ -248,6 +248,26 @@ namespace Cake.CMake.Tests
         // Then
         Assert.Equal(Expected, result.Args);
       }
+
+      [Fact]
+      public void ShouldAppendConfigurationToArguments()
+      {
+        // Given
+        const string Expected = "--build \"/Working/bin\" --config Debug";
+        var fixture = new CMakeBuildRunnerFixture
+        {
+          Settings =
+          {
+            Configuration = "Debug"
+          }
+        };
+
+        // When
+        var result = fixture.Run();
+
+        // Then
+        Assert.Equal(Expected, result.Args);
+      }
     }
 
     [Fact]
