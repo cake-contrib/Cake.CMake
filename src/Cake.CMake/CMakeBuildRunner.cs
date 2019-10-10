@@ -71,6 +71,12 @@ namespace Cake.CMake
         builder.AppendSwitch("--target", string.Join(",", settings.Targets));
       }
 
+      //Configuration
+      if (settings.Configuration != null)
+      {
+          builder.AppendSwitch("--config", settings.Configuration);
+      }
+
       // Options
       if (settings.Options != null)
       {
