@@ -249,5 +249,25 @@ namespace Cake.CMake.Tests
         Assert.Equal(Expected, result.Args);
       }
     }
+
+    [Fact]
+    public void ShouldAppendOptionsSeparatedByDash()
+    {
+        // Given
+        const string Expected = "--build \"/Working/bin\" -- \"/m:4\"";
+        var fixture = new CMakeBuildRunnerFixture
+        {
+            Settings =
+            {
+                Options = new [] {"/m:4"}
+            }
+        };
+
+        // When
+        var result = fixture.Run();
+
+        // Then
+        Assert.Equal(Expected, result.Args);
+        }
   }
 }
