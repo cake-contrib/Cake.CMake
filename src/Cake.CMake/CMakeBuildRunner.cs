@@ -72,8 +72,9 @@ namespace Cake.CMake
       }
 
       // Options
-      if (settings.Options != null)
+      if (settings.Options != null && settings.Options.Count > 0)
       {
+        builder.Append("--");
         foreach (string option in settings.Options)
         {
           builder.AppendQuoted(option);
