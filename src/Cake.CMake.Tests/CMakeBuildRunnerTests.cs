@@ -63,24 +63,6 @@ namespace Cake.CMake.Tests
         Assert.IsType<ArgumentNullException>(result);
         Assert.Equal("processRunner", ((ArgumentNullException)result).ParamName);
       }
-
-      [Fact]
-      public void ShouldThrowIfGlobberIsNull()
-      {
-        // Given
-        var fixture = new CMakeBuildRunnerFixture
-        {
-          Tools = null
-        };
-
-        // When
-        var result = Record.Exception(() => fixture.Run());
-
-        // Then
-        Assert.NotNull(result);
-        Assert.IsType<ArgumentNullException>(result);
-        Assert.Equal("globber", ((ArgumentNullException)result).ParamName);
-      }
     }
 
     public sealed class TheRunMethod
