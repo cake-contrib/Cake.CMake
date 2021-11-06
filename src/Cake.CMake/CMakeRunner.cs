@@ -101,7 +101,7 @@ namespace Cake.CMake
       // Options
       if (settings.Options != null)
       {
-        foreach (string option in settings.Options)
+        foreach (var option in settings.Options)
         {
           builder.AppendQuoted(option);
         }
