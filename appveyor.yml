@@ -1,8 +1,29 @@
 #---------------------------------#
+#  Build Image                    #
+#---------------------------------#
+image: Visual Studio 2022
+
+#---------------------------------#
+#  Install .NET                   #
+#---------------------------------#
+install:
+  - ps: |
+      $env:DOTNET_INSTALL_DIR = "$pwd\.dotnetsdk"
+      mkdir $env:DOTNET_INSTALL_DIR -Force | Out-Null
+      Invoke-WebRequest -Uri "https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1" -OutFile "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1"
+      '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 2.1 -InstallDir $env:DOTNET_INSTALL_DIR'
+      '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 3.1 -InstallDir $env:DOTNET_INSTALL_DIR'
+      '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 5.0 -InstallDir $env:DOTNET_INSTALL_DIR'
+      '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 6.0 -InstallDir $env:DOTNET_INSTALL_DIR'
+      '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 7.0 -InstallDir $env:DOTNET_INSTALL_DIR'
+      $env:Path = "$env:DOTNET_INSTALL_DIR;$env:Path"
+      dotnet --info
+
+#---------------------------------#
 #  Build Script                   #
 #---------------------------------#
 build_script:
-  - ps: .\build.ps1 -Target AppVeyor
+  - ps: .\build.ps1 --target=CI
 
 # Tests
 test: off
@@ -30,8 +51,7 @@ notifications:
 #  Build Cache                    #
 #---------------------------------#
 cache:
-- src\packages -> src\**\packages.config
-- Tools -> build.ps1
+- tools ->  recipe.cake, .config/dotnet-tools.json
 
 #---------------------------------#
 #  Skip builds for doc changes    #
