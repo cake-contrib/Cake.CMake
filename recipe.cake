@@ -14,6 +14,8 @@ BuildParameters.SetParameters(context: Context,
 
 BuildParameters.PrintParameters(Context);
 
+ToolSettings.SetToolPreprocessorDirectives(gitVersionGlobalTool: "#tool dotnet:?package=GitVersion.Tool&version=5.12.0");
+
 ToolSettings.SetToolSettings(context: Context,
                             testCoverageFilter: "+[*]* -[xunit.*]* -[Cake.Core]* -[Cake.Testing]* -[*.Tests]*",
                             testCoverageExcludeByAttribute: "*.ExcludeFromCodeCoverage*",
